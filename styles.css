@@ -42,6 +42,13 @@ body {
     margin-bottom: 2rem;
 }
 
+.small-image{
+    width: 50%;
+    height: auto;
+    display: block;
+    margin-bottom: 2rem;
+}
+
 .container {
     width: 90%;
     max-width: var(--max-width);
@@ -65,9 +72,9 @@ body {
 
 .site-header .container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    padding: 14px 0;
+    padding: 10px 0;
 }
 
 .logo {
@@ -124,7 +131,7 @@ body {
     .site-nav {
 
         flex-direction: row;
-        gap: 286px;
+        gap: 30px;
         margin-top: 12px;
     }
 
