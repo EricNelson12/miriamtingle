@@ -122,6 +122,17 @@ body {
     border-top: 1px solid rgba(15, 23, 42, 0.04);
 }
 
+.footer-contact a {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 8px;
+}
+
+.footer-contact a:hover {
+    color: var(--accent);
+}
+
 /* On wider screens, keep header elements left-aligned but slightly larger spacing */
 @media (min-width: 760px) {
     .site-header .container {

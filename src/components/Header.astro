@@ -1,0 +1,17 @@
+---
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (path: string) => currentPath === path;
+---
+
+<header class="site-header">
+  <div class="container">
+    <h1 class="logo"><a href="/">Miriam Tingle</a></h1>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="#">Ceramic Paintings 2024</a>
+      <a href="#">2023-2024</a>
+      <a href="#">2018-2020</a>
+      <a href="#">Illustrations</a>
+      <a class={isActive('/about') ? 'nav-active' : undefined} href="/about">About</a>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,58 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION, photoUrl } from "../consts";
+
+const images2025 = ["backyardpink", "mallamute", "shannonfalls", "sunlightonthemountains", "torontofall", "wilson"];
+const images2024 = ["04sunflowerfire", "01smokeysun_small", "05redroad", "07lakewind"];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<div class="site-nav">
+				<div class="container">
+					<p class="text">2025</p>
+				</div>
+			</div>
+
+			{images2025.map((name) => (
+				<div class="container">
+					<div class="content-wrapper">
+						<img class="small-image" src={photoUrl(name)} alt="" loading="lazy" decoding="async" />
+					</div>
+				</div>
+			))}
+
+			<div class="site-nav">
+				<div class="container">
+					<p class="text">2024</p>
+				</div>
+			</div>
+
+			{images2024.map((name) => (
+				<div class="container">
+					<div class="content-wrapper">
+						<img class="big-image" src={photoUrl(name)} alt="" loading="lazy" decoding="async" />
+					</div>
+				</div>
+			))}
+
+			<div class="container">
+				<div class="content-wrapper">
+					<img class="small-image" src={photoUrl("pencildrawinggreenflowers")} alt="" loading="lazy" decoding="async" />
+				</div>
+			</div>
+		</main>
+
+		<Footer />
+	</body>
+</html>
