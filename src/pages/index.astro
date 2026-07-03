@@ -12,6 +12,23 @@ const BIG_IMAGE_SIZES = "(min-width: 1223px) 1100px, 90vw";
 
 const images2025 = ["backyardpink", "mallamute", "shannonfalls", "sunlightonthemountains", "torontofall", "wilson"];
 const images2024 = ["04sunflowerfire", "01smokeysun_small", "05redroad", "07lakewind"];
+
+// Intrinsic dimensions of the largest (1600w) generated variant, used so the
+// browser can reserve layout space before the image loads. These are only
+// used to derive the aspect ratio — actual rendered size is set by CSS.
+const IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
+	backyardpink: { width: 1142, height: 1696 },
+	mallamute: { width: 1600, height: 1124 },
+	shannonfalls: { width: 1600, height: 1113 },
+	sunlightonthemountains: { width: 1600, height: 1134 },
+	torontofall: { width: 1600, height: 1134 },
+	wilson: { width: 1600, height: 1114 },
+	"04sunflowerfire": { width: 1600, height: 2133 },
+	"01smokeysun_small": { width: 1600, height: 2133 },
+	"05redroad": { width: 1600, height: 2133 },
+	"07lakewind": { width: 1600, height: 2133 },
+	pencildrawinggreenflowers: { width: 1016, height: 1618 },
+};
 ---
 
 <!doctype html>
@@ -30,7 +47,7 @@ const images2024 = ["04sunflowerfire", "01smokeysun_small", "05redroad", "07lake
 				</div>
 			</div>
 
-			{images2025.map((name) => (
+			{images2025.map((name, index) => (
 				<div class="container">
 					<div class="content-wrapper">
 						<img
@@ -38,8 +55,11 @@ const images2024 = ["04sunflowerfire", "01smokeysun_small", "05redroad", "07lake
 							src={photoUrl(name)}
 							srcset={photoSrcSet(name)}
 							sizes={SMALL_IMAGE_SIZES}
+							width={IMAGE_DIMENSIONS[name].width}
+							height={IMAGE_DIMENSIONS[name].height}
 							alt=""
-							loading="lazy"
+							loading={index === 0 ? "eager" : "lazy"}
+							fetchpriority={index === 0 ? "high" : undefined}
 							decoding="async"
 						/>
 					</div>
@@ -60,6 +80,8 @@ const images2024 = ["04sunflowerfire", "01smokeysun_small", "05redroad", "07lake
 							src={photoUrl(name)}
 							srcset={photoSrcSet(name)}
 							sizes={BIG_IMAGE_SIZES}
+							width={IMAGE_DIMENSIONS[name].width}
+							height={IMAGE_DIMENSIONS[name].height}
 							alt=""
 							loading="lazy"
 							decoding="async"
@@ -75,6 +97,8 @@ const images2024 = ["04sunflowerfire", "01smokeysun_small", "05redroad", "07lake
 						src={photoUrl("pencildrawinggreenflowers")}
 						srcset={photoSrcSet("pencildrawinggreenflowers")}
 						sizes={SMALL_IMAGE_SIZES}
+						width={IMAGE_DIMENSIONS.pencildrawinggreenflowers.width}
+						height={IMAGE_DIMENSIONS.pencildrawinggreenflowers.height}
 						alt=""
 						loading="lazy"
 						decoding="async"
