@@ -9,6 +9,17 @@ export const SITE_DESCRIPTION = 'Miriam Tingle — Toronto-based artist. Paintin
 // or get served from GitHub.
 const R2_PUBLIC_URL = import.meta.env.R2_PUBLIC_URL ?? '';
 
+// Must match the WIDTHS array in scripts/convert-photos.sh.
+const RESPONSIVE_WIDTHS = [480, 800, 1200, 1600];
+
+function r2Url(filename: string): string {
+	return `${R2_PUBLIC_URL.replace(/\/$/, '')}/${filename}`;
+}
+
 export function photoUrl(name: string): string {
-	return `${R2_PUBLIC_URL.replace(/\/$/, '')}/${name}.webp`;
+	return r2Url(`${name}.webp`);
+}
+
+export function photoSrcSet(name: string): string {
+	return RESPONSIVE_WIDTHS.map((w) => `${r2Url(`${name}-${w}.webp`)} ${w}w`).join(', ');
 }

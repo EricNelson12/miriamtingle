@@ -29,13 +29,20 @@ Full-size photos are never committed to GitHub — they're converted to small
    ```
    ./scripts/convert-photos.sh
    ```
-   This resizes each photo and writes a `.webp` version into `photos/converted/`.
-3. Upload the file(s) from `photos/converted/` to the `miriamtingle` R2
-   bucket in the Cloudflare dashboard (or via `rclone`/`wrangler` if you have
-   one of those set up).
+   This resizes each photo to several widths (480/800/1200/1600px) and
+   writes them into `photos/converted/` as `name-480.webp`, `name-800.webp`,
+   etc., plus a plain `name.webp` (a copy of the 1600px version, used as the
+   fallback `src`). The site uses `srcset` to pick the right width for each
+   visitor's screen instead of always downloading the largest one.
+3. Upload **all** of the files from `photos/converted/` for that photo
+   (all four width variants + the plain `name.webp`) to the `miriamtingle`
+   R2 bucket in the Cloudflare dashboard (or via `rclone`/`wrangler` if you
+   have one of those set up). Missing a width variant isn't fatal — the
+   browser just falls back to a nearby size — but upload all five files if
+   you can.
 4. Reference the photo in `src/pages/index.astro` by its filename (without
-   the extension) in the `images2025` or `images2024` list, e.g.
-   `"backyardpink"` for `backyardpink.webp`.
+   the extension or width suffix) in the `images2025` or `images2024` list,
+   e.g. `"backyardpink"` for `backyardpink.webp` / `backyardpink-480.webp` / etc.
 5. Commit and push as usual — GitHub never sees the actual image bytes.
 
 ## Local development with real images

@@ -2,7 +2,13 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION, photoUrl } from "../consts";
+import { SITE_TITLE, SITE_DESCRIPTION, photoUrl, photoSrcSet } from "../consts";
+
+// .small-image is 50% of the .container (90vw, capped at 1100px).
+// .big-image is 100% of the same container. Keep these in sync with the
+// width/max-width rules in src/styles/global.css.
+const SMALL_IMAGE_SIZES = "(min-width: 1223px) 550px, 45vw";
+const BIG_IMAGE_SIZES = "(min-width: 1223px) 1100px, 90vw";
 
 const images2025 = ["backyardpink", "mallamute", "shannonfalls", "sunlightonthemountains", "torontofall", "wilson"];
 const images2024 = ["04sunflowerfire", "01smokeysun_small", "05redroad", "07lakewind"];
@@ -27,7 +33,15 @@ const images2024 = ["04sunflowerfire", "01smokeysun_small", "05redroad", "07lake
 			{images2025.map((name) => (
 				<div class="container">
 					<div class="content-wrapper">
-						<img class="small-image" src={photoUrl(name)} alt="" loading="lazy" decoding="async" />
+						<img
+							class="small-image"
+							src={photoUrl(name)}
+							srcset={photoSrcSet(name)}
+							sizes={SMALL_IMAGE_SIZES}
+							alt=""
+							loading="lazy"
+							decoding="async"
+						/>
 					</div>
 				</div>
 			))}
@@ -41,14 +55,30 @@ const images2024 = ["04sunflowerfire", "01smokeysun_small", "05redroad", "07lake
 			{images2024.map((name) => (
 				<div class="container">
 					<div class="content-wrapper">
-						<img class="big-image" src={photoUrl(name)} alt="" loading="lazy" decoding="async" />
+						<img
+							class="big-image"
+							src={photoUrl(name)}
+							srcset={photoSrcSet(name)}
+							sizes={BIG_IMAGE_SIZES}
+							alt=""
+							loading="lazy"
+							decoding="async"
+						/>
 					</div>
 				</div>
 			))}
 
 			<div class="container">
 				<div class="content-wrapper">
-					<img class="small-image" src={photoUrl("pencildrawinggreenflowers")} alt="" loading="lazy" decoding="async" />
+					<img
+						class="small-image"
+						src={photoUrl("pencildrawinggreenflowers")}
+						srcset={photoSrcSet("pencildrawinggreenflowers")}
+						sizes={SMALL_IMAGE_SIZES}
+						alt=""
+						loading="lazy"
+						decoding="async"
+					/>
 				</div>
 			</div>
 		</main>
