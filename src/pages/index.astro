@@ -2,12 +2,14 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import SideNav from "../components/SideNav.astro";
 import { SITE_TITLE, SITE_DESCRIPTION, photoUrl, photoSrcSet } from "../consts";
 
-// .small-image is 50% of the .container (90vw, capped at 1100px).
-// .big-image is 100% of the same container. Keep these in sync with the
-// width/max-width rules in src/styles/global.css.
-const SMALL_IMAGE_SIZES = "(min-width: 1223px) 550px, 45vw";
+// .small-image is up to 50% of the .container (90vw, capped at 1100px) on
+// desktop and 85% of it on phones; .big-image is up to 100% of the same
+// container. Both are also capped by max-height in src/styles/global.css —
+// keep these values in sync with the rules there.
+const SMALL_IMAGE_SIZES = "(min-width: 1223px) 550px, (min-width: 760px) 45vw, 77vw";
 const BIG_IMAGE_SIZES = "(min-width: 1223px) 1100px, 90vw";
 
 const images2025 = ["backyardpink", "mallamute", "shannonfalls", "sunlightonthemountains", "torontofall", "wilson"];
@@ -41,12 +43,11 @@ const IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
 		<Header />
 
 		<main>
-			<div class="site-nav">
-				<div class="container">
-					<p class="text">2025</p>
-				</div>
+			<div class="container side-nav-anchor">
+				<SideNav />
 			</div>
 
+			<section id="2025">
 			{images2025.map((name, index) => (
 				<div class="container">
 					<div class="content-wrapper">
@@ -65,13 +66,9 @@ const IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
 					</div>
 				</div>
 			))}
+			</section>
 
-			<div class="site-nav">
-				<div class="container">
-					<p class="text">2024</p>
-				</div>
-			</div>
-
+			<section id="2024">
 			{images2024.map((name) => (
 				<div class="container">
 					<div class="content-wrapper">
@@ -97,14 +94,13 @@ const IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
 						src={photoUrl("pencildrawinggreenflowers")}
 						srcset={photoSrcSet("pencildrawinggreenflowers")}
 						sizes={SMALL_IMAGE_SIZES}
-						width={IMAGE_DIMENSIONS.pencildrawinggreenflowers.width}
-						height={IMAGE_DIMENSIONS.pencildrawinggreenflowers.height}
 						alt=""
 						loading="lazy"
 						decoding="async"
 					/>
 				</div>
 			</div>
+			</section>
 		</main>
 
 		<Footer />

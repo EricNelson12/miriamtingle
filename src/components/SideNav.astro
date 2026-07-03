@@ -1,0 +1,35 @@
+<nav class="side-nav" aria-label="Section navigation">
+  <a href="#top">2025</a>
+  <a href="#2024">2024</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<script>
+  const nav = document.querySelector(".side-nav");
+  if (nav) {
+    const links = Array.from(nav.querySelectorAll("a"));
+    // "#top" has no matching element (browser scrolls to the top of the
+    // document); a null target leaves the first link as the default active.
+    const targets = links.map((link) =>
+      document.getElementById((link.getAttribute("href") || "").slice(1))
+    );
+
+    const update = () => {
+      let activeIndex = 0;
+      const marker = window.scrollY + window.innerHeight / 3;
+      targets.forEach((target, i) => {
+        if (target && target.offsetTop <= marker) activeIndex = i;
+      });
+      // At the very bottom of the page, the footer may be too short to pass
+      // the marker on its own — force the last link active.
+      if (window.scrollY + window.innerHeight >= document.body.scrollHeight - 2) {
+        activeIndex = links.length - 1;
+      }
+      links.forEach((link, i) => link.classList.toggle("is-active", i === activeIndex));
+    };
+
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  }
+</script>
