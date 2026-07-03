@@ -7,7 +7,9 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "photos": "./scripts/convert-photos.sh && node scripts/generate-image-dimensions.mjs",
+    "photos:dimensions": "node scripts/generate-image-dimensions.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.3.0",

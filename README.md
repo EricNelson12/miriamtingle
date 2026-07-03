@@ -25,15 +25,25 @@ Full-size photos are never committed to GitHub — they're converted to small
 
 1. Drop the full-size photo(s) into the `photos/` folder (this folder is
    ignored by git — nothing in it gets uploaded to GitHub).
-2. Run the conversion script:
+2. Run the photo pipeline:
    ```
-   ./scripts/convert-photos.sh
+   npm run photos
    ```
-   This resizes each photo to several widths (480/800/1200/1600px) and
-   writes them into `photos/converted/` as `name-480.webp`, `name-800.webp`,
-   etc., plus a plain `name.webp` (a copy of the 1600px version, used as the
-   fallback `src`). The site uses `srcset` to pick the right width for each
-   visitor's screen instead of always downloading the largest one.
+   This does two things:
+   - **Resizes each photo** to several widths (480/800/1200/1600px) and
+     writes them into `photos/converted/` as `name-480.webp`, `name-800.webp`,
+     etc., plus a plain `name.webp` (a copy of the 1600px version, used as
+     the fallback `src`). The site uses `srcset` to pick the right width for
+     each visitor's screen instead of always downloading the largest one.
+     (This step is `scripts/convert-photos.sh` — you can still run it
+     directly if you prefer.)
+   - **Regenerates `src/image-dimensions.json`** with the real pixel size of
+     each photo (`scripts/generate-image-dimensions.mjs`). The site puts
+     these numbers on every `<img>` tag as `width`/`height`, which tells the
+     browser each photo's shape before it downloads, so the page doesn't
+     jump around while images load. Never edit this file by hand — rerun
+     the script instead (`npm run photos:dimensions` regenerates just the
+     JSON without re-converting the photos).
 3. Upload **all** of the files from `photos/converted/` for that photo
    (all four width variants + the plain `name.webp`) to the `miriamtingle`
    R2 bucket in the Cloudflare dashboard (or via `rclone`/`wrangler` if you
@@ -43,7 +53,9 @@ Full-size photos are never committed to GitHub — they're converted to small
 4. Reference the photo in `src/pages/index.astro` by its filename (without
    the extension or width suffix) in the `images2025` or `images2024` list,
    e.g. `"backyardpink"` for `backyardpink.webp` / `backyardpink-480.webp` / etc.
-5. Commit and push as usual — GitHub never sees the actual image bytes.
+5. Commit and push as usual — **including the updated
+   `src/image-dimensions.json`** (it's needed at build time). GitHub never
+   sees the actual image bytes.
 
 ## Local development with real images
 To see real photos (not broken image icons) when running `npm run dev`
